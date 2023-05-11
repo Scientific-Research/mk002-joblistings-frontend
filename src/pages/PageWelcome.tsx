@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'react';
-const backendURL = `http://localhost:3014`;
+import axios from 'axios';
+
+const backendURL = 'http://localhost:3013';
 
 export const PageWelcome = () => {
 	const [jobs, setJobs] = useState([]);
+
+	useEffect(() => {
+		(async () => {
+			setJobs((await axios.get(`${backendURL}/jobs`)).data);
+		})();
+	}, []);
+
 	return (
 		<div className="pageWelcome">
-			<p>There are nn job listings.</p>
+			<p>There are {jobs.length} job listings.</p>
 		</div>
 	);
 };
